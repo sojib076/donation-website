@@ -3,7 +3,7 @@ import React from 'react';
 
 const Betterworld = () => {
     return (
-        <div className='my-[120px] '  >
+        <div className='mt-[120px] '  >
 
             <div className='w-full lg:h-[614px] py-10 lg:py-0 bg-blue-900 grid grid-cols-1  '>
 

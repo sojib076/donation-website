@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
+import { BiWorld } from "react-icons/bi";
 
 
 const Bbanner = () => {
@@ -9,7 +10,7 @@ const Bbanner = () => {
                 src="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                  className=" lg:h-[370px] bg-neutral-100 rounded-tl-[10px] rounded-bl-[10px]"
             />
-            <div className=" h-[370px] bg-mycustomcolors-secondary lg:p-12 p-8 " >
+            <div className=" h-[370px] bg-yellow-800 lg:p-12 p-8 " >
                 <h1 className="lg:w-[435px] text-white text-3xl font-semibold font-['Poppins'] leading-[37px]  ">We Change Your Life<br />& World</h1>
                 <div className="w-[60px] h-[3px] bg-mycustomcolors-primary rounded-[50px] my-4 " />
                 <p className=" text-neutral-100 text-base font-normal font-['Poppins'] leading-snug lg:mb-10 mb-5 ">Penatibus et magnis dis parturient montes nascetur ridiculus. Quis risus sed vulputate odio ut enim blandit volutpat maecenas.</p>
@@ -20,15 +21,15 @@ const Bbanner = () => {
 
                                 
                                 " >
-                    Donate
+                                   Be Volunteer
                     <span>
-                        <Heart size={20} className="text-white" />
+                        <BiWorld size={20} className="text-white" />
 
                     </span>
                 </Button>
 
             </div>
-            <div className=" h-[370px] bg-mycustomcolors-primary lg:p-12 p-8 " >
+            <div className=" h-[370px] bg-green-800 lg:p-12 p-8 " >
                 <h1 className="lg:w-[435px] text-white text-3xl font-semibold font-['Poppins'] leading-[37px]  ">We Change Your Life<br />& World</h1>
                 <div className="w-[60px] h-[3px] bg-mycustomcolors-primary rounded-[50px] my-4 " />
                 <p className=" text-neutral-100 text-base font-normal font-['Poppins'] leading-snug lg:mb-10 mb-5 ">Penatibus et magnis dis parturient montes nascetur ridiculus. Quis risus sed vulputate odio ut enim blandit volutpat maecenas.</p>
@@ -41,7 +42,7 @@ const Bbanner = () => {
                                 " >
                     Donate
                     <span>
-                        <Heart size={20} className="text-white" />
+                        <Heart size={20} className="text-white fill-white" />
 
                     </span>
                 </Button>

@@ -41,17 +41,19 @@ const Team = () => {
 
                     </div>
 
-                    <div className=" relative left-10 top-10  ">
-                        <Image src="/Element.png" alt="s" width={300} height={25} className="mx-auto absolute lg:left-20 left-0 lg:w-[350px]
-                     w-52  lg:right-[-200px] top-[-50px]  " />
+                    <div className=" relative left-10 top-10 overflow-hidden  ">
+                        <Image src="/Element.png" alt="s" width={300} height={25} className="mx-auto absolute lg:left-20 left-[-5%] lg:w-[350px]
+                     w-52  lg:right-[-200px] lg:top-[-50px] top-[-20%]  " />
 
                         <div className="lg:w-[500px] w-[300px] lg:h-[500px] h-[300px] bg-[#d9d9d9] lg:rounded-full rounded-[200px] relative z-20  " />
 
-                    <div className=" relative lg:left-24 top-[-40px] z-50 left-[7%]  ">
+                    <div className=" relative lg:left-[20%]  top-[-40px] z-50 left-[7%]  ">
 
-                            <div className="w-[250px] lg:h-[110px] lg:w-[200px] h-[70px]     bg-white rounded-full shadow " >
 
-                                <div className='relative lg:left-8 left-[14%] lg:top-8 top-3  '>
+
+                            <div className="w-[250px] lg:h-[70px]  h-[70px]     bg-white rounded-full shadow " >
+
+                                <div className='relative lg:left-10 left-[14%] lg:top- top-3  '>
                                     <div className="w-[50px] h-[50px] left-5 absolute bg-[#d9d9d9] rounded-full border-2 border-white" />
                                     <div className="w-[50px] h-[50px] left-12  absolute bg-[#d9d9d9] rounded-full border-2 border-white" />
                                     <div className="w-[50px] h-[50px] left-20  absolute bg-[#d9d9d9] rounded-full border-2 border-white" />

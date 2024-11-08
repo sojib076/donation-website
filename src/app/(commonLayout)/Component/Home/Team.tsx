@@ -7,10 +7,10 @@ import { BiCircleQuarter } from 'react-icons/bi';
 const Team = () => {
     return (
         <div>
-            <div className="my-[120px]  ">
+            <div className="mt-[120px]   ">
 
-                <div className="w-fll  grid lg:grid-cols-2 grid-cols-1 gap-10 items-center lg:w-[80%] mx-auto  ">
-                    <div className=" lg:h-[500px] rounded-[10px] lg:p-8 lg:mt-0 p-5   " >
+                <div className="w-fll  grid lg:grid-cols-2 grid-cols-1 gap-10 items-center lg:w-[80%] mx-auto    ">
+                    <div className=" lg:h-[500px] rounded-[10px] lg:p-8 lg:mt-0 p-5     " >
                         <h1 className=" text-[#27ae60] text-sm font-semibold  leading-relaxed">
                             Team
                         </h1>
@@ -41,19 +41,19 @@ const Team = () => {
 
                     </div>
 
-                    <div className=" relative left-10 top-10 overflow-hidden  ">
+                    <div className=" relative lg:left-10 top-10 lg:w-full  w-[80%] mx-auto      ">
                         <Image src="/Element.png" alt="s" width={300} height={25} className="mx-auto absolute lg:left-20 left-[-5%] lg:w-[350px]
                      w-52  lg:right-[-200px] lg:top-[-50px] top-[-20%]  " />
 
                         <div className="lg:w-[500px] w-[300px] lg:h-[500px] h-[300px] bg-[#d9d9d9] lg:rounded-full rounded-[200px] relative z-20  " />
 
-                    <div className=" relative lg:left-[20%]  top-[-40px] z-50 left-[7%]  ">
+                    <div className=" relative lg:left-[18%] left-4  top-[-40px] z-50   ">
 
 
 
-                            <div className="w-[250px] lg:h-[70px]  h-[70px]     bg-white rounded-full shadow " >
+                            <div className=" lg:h-[70px] w-[250px] h-[70px]      bg-white rounded-full shadow overflow-hidden " >
 
-                                <div className='relative lg:left-10 left-[14%] lg:top- top-3  '>
+                                <div className='relative lg:left-8 left-[14%] lg:top- top-3  '>
                                     <div className="w-[50px] h-[50px] left-5 absolute bg-[#d9d9d9] rounded-full border-2 border-white" />
                                     <div className="w-[50px] h-[50px] left-12  absolute bg-[#d9d9d9] rounded-full border-2 border-white" />
                                     <div className="w-[50px] h-[50px] left-20  absolute bg-[#d9d9d9] rounded-full border-2 border-white" />
@@ -65,7 +65,7 @@ const Team = () => {
                                 </div>
 
                             </div>
-                        </div>
+                    </div>
 
 
 

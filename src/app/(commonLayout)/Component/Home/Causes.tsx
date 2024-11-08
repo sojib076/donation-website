@@ -16,13 +16,15 @@ const Causes = () => {
 
 
 
-            <div className="lg:w-[80%] mx-auto my-10 ">
+            <div className="lg:w-[80%] mx-auto my-10 lg:px-0 px-2 ">
                 <Carousel
 
 
                 >
                     <CarouselContent>
-                        {Array.from({ length: 3 }).map((_, index) => (
+                        { 
+                        
+                        Array.from({ length: 6 }).map((_, index) => (
                             <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 lg:p-5">
                                 <div className="lg:max-w-[400px]  bg-white rounded-lg shadow-lg overflow-hidden">
 
@@ -52,7 +54,7 @@ const Causes = () => {
 
                                         {/* Progress Bar */}
                                         <div className="relative w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-4">
-                                            <div className="h-full bg-green-500" style={{ width: '35%' }} />
+                                            <div className="h-full bg-green-500" style={{ width: index *30 }} />
 
                                         </div>
 

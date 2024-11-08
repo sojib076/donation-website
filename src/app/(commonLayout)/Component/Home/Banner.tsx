@@ -19,7 +19,7 @@ const Banner = () => {
                                 and do Great Thing
                                 for Each
                             </h1>
-                            <hr className="w-[62px] h-[4px] bg-[#f9a826] my-4 
+                            <div className="w-[62px] h-[4px] bg-[#f9a826] my-4 
                                 rounded-lg 
                                 " />
 
@@ -62,7 +62,7 @@ const Banner = () => {
 
 
                     <div className="lg:w-[600px]  lg:h-[600px] h-[400px] bg-neutral-100 rounded-lg" />
-                    <div className="w-[310px] h-[190px] bg-white rounded-[10px] shadow lg:absolute relative  lg:bottom-[-40px] lg:left-16 p-7 left-4 top-[-40px] lg:top-[80%]  " >
+                    <div className="max-w-[310px] h-[190px] bg-white rounded-[10px] shadow lg:absolute relative  lg:bottom-[-40px] lg:left-16 p-7 left-4 top-[-40px] lg:top-[80%]  " >
                         <h1 className="w-[250px] text-[#27ae60] text-[54px] font-bold font-['Poppins'] leading-[60px]">85K+</h1>
                         <hr className="w-[70px] h-[4px] bg-[#ec8e11] rounded-[50px]" />
                         <p className="w-[250px] text-[#292929] text-lg font-semibold font-['Poppins'] leading-relaxed mt-2">Different Projects Done with the Help of Donators</p>
@@ -71,7 +71,7 @@ const Banner = () => {
                 </div>
 
             </div>
-           <div className="relative top-[-20px] lg:right-0"> 
+           <div className="relative top-[-20px] "> 
            <Bbanner />
            </div>
         </div>

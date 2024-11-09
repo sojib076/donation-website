@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import Footer from "./Component/HeadFooter/Footer";
+import Header from "./Component/HeadFooter/Header";
 
 const poppins = Poppins({
     subsets: ['latin'],       
@@ -24,7 +25,10 @@ export default function Commonlayout({
         className={`antialiased ${poppins.className}`}
       
       >
-        {children}
+        <Header />
+      <div className="min-h-screen"> 
+      {children}
+      </div>
         <Footer />
       </body>
     </html>

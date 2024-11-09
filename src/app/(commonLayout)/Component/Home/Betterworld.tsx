@@ -10,7 +10,7 @@ const Betterworld = () => {
                 <div className="lg:w-[80%] w-full  relative top-[-50px] mx-auto lg:h-80  bg-[#dddddd] rounded-[10px] lg:p-10 p-5 lg:flex  justify-between items-center  " >
                     <div>
                         <h6 className=" text-[#27ae60] text-xl font-semibold  leading-relaxed">Act Now for a Better World</h6>
-                        <h6 className=" text-[#292929] lg:text-[40px]  text-[34px] text-xl font-semibold leading-[40px]">Solutions to Help People in Need
+                        <h6 className=" text-[#292929] lg:text-[40px]  text-[34px] text-xl font-semibold lg:leading-[40px]">Solutions to Help People in Need
                             <br />and Save the Planet</h6>
                             <div className="w-[120px] h-1 bg-mycustomcolors-secondary rounded-[10px] my-3" />
                     </div>

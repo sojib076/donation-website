@@ -5,6 +5,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
+import Image from "next/image";
 
 const Testimonials = () => {
     return (
@@ -32,7 +33,11 @@ const Testimonials = () => {
 
                                             <div className="lg:max-w-[350px] h-[50px] flex items-center gap-5 ">
                                                 <div>
-                                                    <img src="/" alt="quote" className="h-[50px] w-[50px]" />
+                                                    <Image 
+                                                     src="/"
+                                                        width={50}
+                                                        height={50}
+                                                     alt="quote" className="h-[50px] w-[50px]" />
                                                 </div>
                                                 <div>
                                                     <h6 className="  text-[#292929] text-base font-medium font-['Poppins'] leading-snug">Valerie Patterson</h6>

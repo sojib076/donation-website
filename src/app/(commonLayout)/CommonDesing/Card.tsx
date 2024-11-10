@@ -1,8 +1,9 @@
+import Link from 'next/link';
 import React from 'react';
 
-const Card = (index:number) => {
+const Card = (data:any) => {
     return (
-        <div className="lg:max-w-[400px]  bg-white rounded-lg shadow-lg overflow-hidden">
+        <div key={data.id} className="lg:max-w-[400px]  bg-white rounded-lg shadow-lg overflow-hidden">
 
             <div className="relative h-[250px] bg-gray-300">
 
@@ -30,14 +31,16 @@ const Card = (index:number) => {
 
                 {/* Progress Bar */}
                 <div className="relative w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-4">
-                    <div className="h-full bg-green-500" style={{ width: index * 30 }} />
+                    <div className="h-full bg-green-500" style={{ width:   50 }} />
 
                 </div>
 
-                {/* Donate Button */}
+              
+                <Link href="/causes/1">
                 <button className="w-full py-3 bg-orange-500 text-white font-semibold  rounded-md hover:bg-orange-600 transition duration-200">
                     Donate Now
                 </button>
+                </Link>
             </div>
         </div>
     );

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Heart, Watch } from "lucide-react";
+import { Heart } from "lucide-react";
 import {  FaHandHoldingHeart, FaPlay } from "react-icons/fa6";
 import Bbanner from "./Bbanner";
 

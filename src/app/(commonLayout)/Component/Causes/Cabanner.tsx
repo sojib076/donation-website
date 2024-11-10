@@ -9,7 +9,22 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 
-const Cabanner = () => {
+type CabannerProps = {
+    // "albumId": 1,
+    // "id": 1,
+    // "title": "accusamus beatae ad facilis cum similique qui sunt",
+    // "url": "https://via.placeholder.com/600/92c952",
+    // "thumbnailUrl": "https://via.placeholder.com/150/92c952"
+    datas: any;
+}
+
+const Cabanner = async ({ datas }: {
+    datas: any
+}) => {
+
+
+
+
     return (
         <div>
             <div className=" lg:h-[400px] h-32 opacity-60 bg-[#292929] lg:p-28 p-5" >
@@ -21,12 +36,9 @@ const Cabanner = () => {
 
                 <div className=" grid gap-10 lg:grid-cols-3 grid-cols-1 lg:px-28 px-5">
                     {
-                        [1, 2, 3, 4, 5, 6].map((index) => (
-                            Card(index)
+                        datas.map((album: any) => (
+                            <Card  data={album }></Card>
                         ))
-
-
-
                     }
 
                 </div>

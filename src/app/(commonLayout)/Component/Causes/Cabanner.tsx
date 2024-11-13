@@ -37,7 +37,7 @@ const Cabanner = async ({ datas }: {
                 <div className=" grid gap-10 lg:grid-cols-3 grid-cols-1 lg:px-28 px-5">
                     {
                         datas.map((album: any) => (
-                            <Card  data={album }></Card>
+                            <Card key={album.id}  data={album }></Card>
                         ))
                     }
 

@@ -9,6 +9,7 @@ const Bbanner = () => {
             <img
                 src="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                  className=" lg:h-[370px] bg-neutral-100 rounded-tl-[10px] rounded-bl-[10px]"
+                    alt="s"
             />
             <div className=" h-[370px] bg-yellow-800 lg:p-12 p-8 " >
                 <h1 className="lg:w-[435px] text-white text-3xl font-semibold font-['Poppins'] leading-[37px]  ">We Change Your Life<br />& World</h1>

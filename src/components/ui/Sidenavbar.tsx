@@ -19,13 +19,13 @@ const items = [
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
+    title: "create-donation",
+    url: "create-donation",
     icon: Inbox,
   },
   {
-    title: "Calendar",
-    url: "#",
+    title: "All Donation",
+    url: "all-donation",
     icon: Calendar,
   },
   {
@@ -43,7 +43,7 @@ const items = [
 
 export function AppSidebar() {
   return (
-    <Sidebar className="">
+    <Sidebar  >
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>

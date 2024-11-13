@@ -15,9 +15,9 @@ const Banner = () => {
                         <div className="lg:w-[600px] w-full px-5 ">
 
                             <h1 className="text-[#27AE60] font-semibold text-[20px] text-left "> Save Life, Save the Planet</h1>
-                            <h1 className=" lg:text-[54px] text-4xl lg:leading-[60px] leading-10 font-bold my-4   ">Let's Make Move <br />
+                            <h1 className=" lg:text-[54px] text-4xl lg:leading-[60px] leading-10 font-bold my-4 "> {`Let's Make Move <br />
                                 and do Great Thing
-                                for Each
+                                for Each `}
                             </h1>
                             <div className="w-[62px] h-[4px] bg-[#f9a826] my-4 
                                 rounded-lg 

@@ -23,7 +23,7 @@ const AdminDashboard = () => {
    
     console.log(`Deleting user: ${userToDelete.name}`)
   
-    await new Promise(resolve => setTimeout(resolve, 1000)) // Simulating API call
+    await new Promise(resolve => setTimeout(resolve, 1000)) 
   }
 
     return (

@@ -44,7 +44,7 @@ export default function AdminDashboard({
             </div>
 
 
-            <div className="bg-gray-100">
+            <div className="bg-gray-100 min-h-[100vh]">
               {children}
             </div>
 

@@ -91,72 +91,10 @@ export default function DonationsList() {
 
     return (
         <div className="container mx-auto py-10 px-4">
-            <h1 className="text-4xl font-bold mb-8 text-center text-amber-600">Donation Dashboard</h1>
-            <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {newthreeDonations.map((donation) => (
-                        <Card key={donation.id} className="overflow-hidden bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                            <div className="relative">
-                                <Image
-                                    src={`/images/donation-${donation.id}.jpg`}
-                                    alt={donation.title}
-                                    width={400}
-                                    height={200}
-                                    layout="responsive"
-                                />
-                                <Badge
-                                    variant={donation.status === 'completed' ? 'secondary' : 'default'}
-                                    className="absolute top-2 right-2 bg-amber-500 text-white"
-                                >
-                                    {donation.status}
-                                </Badge>
-                            </div>
-                            <CardHeader>
-                                <CardTitle className="text-xl text-amber-800">{donation.title}</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <p className="text-sm text-amber-700 mb-4">{donation.description}</p>
-                                <div className="space-y-2">
-                                    <div className="flex justify-between text-sm text-amber-600">
-                                        <span>Progress</span>
-                                        <span>{Math.round((donation.current / donation.target) * 100)}%</span>
-                                    </div>
-                                    <Progress value={(donation.current / donation.target) * 100} className="h-2 bg-amber-200" />
-                                    <div className="flex justify-between text-sm font-medium">
-                                        <span className="text-amber-700">
-                                            <DollarSign className="inline-block w-4 h-4 mr-1" />
-                                            {donation.current.toLocaleString()}
-                                        </span>
-                                        <span className="text-amber-600">
-                                            Target: ${donation.target.toLocaleString()}
-                                        </span>
-                                    </div>
-                                </div>
-                            </CardContent>
-                            <CardFooter className="flex justify-between bg-amber-50">
-                                <Button variant="outline" size="sm" onClick={() => handleUpdate(donation.id)} className="text-amber-700 border-amber-300 hover:bg-amber-200">
-                                    <Pencil className="w-4 h-4 mr-2" />
-                                    Update
-                                </Button>
-                                <Button variant="outline" size="sm" onClick={() => handleDelete(donation.id)} className="text-amber-700 border-amber-300 hover:bg-amber-200">
-                                    <Trash2 className="w-4 h-4 mr-2" />
-                                    Delete
-                                </Button>
-                                {donation.status === 'active' && (
-                                    <Button variant="outline" size="sm" onClick={() => handleMarkDone(donation.id)} className="text-amber-700 border-amber-300 hover:bg-amber-200">
-                                        <CheckCircle className="w-4 h-4 mr-2" />
-                                        Mark Done
-                                    </Button>
-                                )}
-                            </CardFooter>
-                        </Card>
-                    ))}
-                </div>
-
-            </>
+            
 
             <div className="container mx-auto py-10 px-4">
-                <h1 className="text-4xl font-bold mb-8 text-center text-amber-600">Donation Dashboard</h1>
+              
 
                 <div className="flex flex-col md:flex-row gap-4 mb-6">
                     <div className="relative flex-grow">
@@ -255,7 +193,7 @@ export default function DonationsList() {
                                 width={200}
                                 height={100}
                                 className="rounded-md mb-2"
-                                
+
                             />
                             <h3 className="font-semibold text-sm mb-1">{hoveredDonation.title}</h3>
                             <p className="text-xs text-gray-500">{hoveredDonation.description}</p>

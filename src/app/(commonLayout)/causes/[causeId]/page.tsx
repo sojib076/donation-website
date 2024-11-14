@@ -4,7 +4,6 @@
 import React from "react";
 import Form from "../../Component/Causes/Form";
 
-
 async function fetchCauseData(causeId: number) {
     try {
         const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${causeId}`, {

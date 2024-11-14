@@ -15,17 +15,17 @@ import {
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/admin-dashboard",
     icon: Home,
   },
   {
     title: "create-donation",
-    url: "create-donation",
+    url: "/admin-dashboard/create-donation",
     icon: Inbox,
   },
   {
     title: "All Donation",
-    url: "all-donation",
+    url: "/admin-dashboard/all-donation",
     icon: Calendar,
   },
   {

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { PlusCircle } from 'lucide-react'
-import { Toast } from '@radix-ui/react-toast'
+
 import { toast } from '@/hooks/use-toast'
 
 export default function CreateDonation() {

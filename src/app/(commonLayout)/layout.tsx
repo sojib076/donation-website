@@ -22,7 +22,7 @@ export default function Commonlayout({
   return (
     <html lang="en">
       <body
-        className={`antialiased ${poppins.className}`}
+        className={` ${poppins.className}`}
       
       >
         <Header />

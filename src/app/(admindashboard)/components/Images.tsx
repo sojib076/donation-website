@@ -44,7 +44,7 @@ export default function Component() {
   const [uploadPreview, setUploadPreview] = useState<string | null>(null)
   const [uploadName, setUploadName] = useState('')
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
-  const perPage = 12
+  const perPage = 10
 
   const loadImages = async () => {
     const result = await fetchImages(currentPage, perPage)
@@ -52,6 +52,7 @@ export default function Component() {
     setTotalImages(result.total)
   }
 
+  
   useEffect(() => {
     loadImages()
   }, [currentPage]) // eslint-disable-line react-hooks/exhaustive-deps

@@ -112,7 +112,7 @@ export default function DonationProfile() {
                   </div>
                   <Progress value={52.8} className="h-2 w-full" />
                 </div>
-                <p className="mt-2 text-sm text-gray-500">You're 52.8% of the way to your annual goal!</p>
+                <p className="mt-2 text-sm text-gray-500">Youre 52.8% of the way to your annual goal!</p>
               </CardContent>
             </Card>
 

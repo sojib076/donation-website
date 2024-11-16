@@ -128,7 +128,7 @@ export default function UserManagement() {
             <DialogHeader>
               <DialogTitle>Add New User</DialogTitle>
               <DialogDescription>
-                Enter the details of the new user here. Click save when you're done.
+                Fill in the form below to add a new user.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
@@ -194,7 +194,7 @@ export default function UserManagement() {
           </TableHeader>
           <TableBody>
             {filteredUsers.map((user) => (
-              <TableRow key={user.id} className={user.role === 'admin' ? 'bg-amber-50' : ''}>
+              <TableRow key={user.id} className='hover:bg-slate-400 cursor-pointer' >
                 <TableCell className="font-medium">{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>

@@ -30,6 +30,10 @@ const Header = () => {
     {
         name: 'Contact',
         path: '/contact'
+    },
+    {
+        name: 'Blogs',
+        path: '/blogs'
     }
     ]
 
@@ -74,7 +78,7 @@ const Header = () => {
                         <Link href={route.path} key={index}>
                             <h1
 
-                                className={`cursor-pointer relative group transition-all hover:text-primary-100`}
+                                className={`cursor-pointer relative group transition-all hover:text-primary-100 font-semibold `}
                             >
                                 {route.name}
                                 <span

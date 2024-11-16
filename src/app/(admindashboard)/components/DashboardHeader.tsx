@@ -12,6 +12,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import Link from 'next/link'
 
 export default function DashboardHeader() {
     const [user, setUser] = useState({
@@ -21,7 +22,7 @@ export default function DashboardHeader() {
     })
 
     const handleLogout = () => {
-        // Implement logout logic here
+        
         console.log('User logged out')
     }
 
@@ -54,10 +55,14 @@ export default function DashboardHeader() {
                                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
 
                                 <DropdownMenuSeparator />
+                                <Link href="/admin-dashboard/profile" className=''>
                                 <DropdownMenuItem className='cursor-pointer motion-preset-rebound '>
+                                  
                                     <User className=" mr-2 h-4 w-4 "  />
                                     Profile
+                                  
                                 </DropdownMenuItem>
+                                </Link>
                                 <DropdownMenuItem className='cursor-pointer  motion-preset-rebound '>
                                     <Settings className="mr-2 h-4 w-4  motion-preset-spin " />
                                     Settings

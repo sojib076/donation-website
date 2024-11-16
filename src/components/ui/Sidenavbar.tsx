@@ -1,8 +1,9 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { Calendar, Gift, Home,  PenTool, Users  ,Image} from "lucide-react"
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -10,8 +11,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
-// Menu items.
+
 const items = [
   {
     title: "Home",
@@ -19,24 +21,29 @@ const items = [
     icon: Home,
   },
   {
-    title: "create-donation",
+    title: "Create Donation",
     url: "/admin-dashboard/create-donation",
-    icon: Inbox,
+    icon: Gift,
   },
   {
-    title: "All Donation",
+    title: "All Donations",
     url: "/admin-dashboard/all-donation",
     icon: Calendar,
   },
   {
-    title: "Search",
-    url: "#",
-    icon: Search,
+    title: "All Users",
+    url: "/admin-dashboard/all-users",
+    icon: Users,
   },
   {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "Media",
+    url: "/admin-dashboard/images",
+    icon: Image,
+  },
+  {
+    title: "Create Blog",
+    url: "/admin-dashboard/create-blog",
+    icon: PenTool,
   },
 ]
 
@@ -48,21 +55,21 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
+          <ScrollArea className="h-[calc(100vh-8rem)]">
             <SidebarMenu
-                className=" gap-4 p-4"
-            >
+              className=" gap-4 p-4">
 
               {items.map((item) => (
                 <SidebarMenuItem
-                className="rounded-xl "
-                key={item.title}>
-                  <SidebarMenuButton 
-                  className="hover:bg-gray-200 
+                  className="rounded-xl "
+                  key={item.title}>
+                  <SidebarMenuButton
+                    className="hover:bg-gray-200 
                     hover:text-black
                     rounded-xl
                   "
-                  
-                  asChild
+
+                    asChild
                   >
                     <a href={item.url}>
                       <item.icon />
@@ -73,9 +80,14 @@ export function AppSidebar() {
               ))}
 
             </SidebarMenu>
+            </ScrollArea>
           </SidebarGroupContent>
         </SidebarGroup>
+        
       </SidebarContent>
+      <SidebarFooter className="border-t p-4">
+          <p className="text-xs text-muted-foreground">© 2024 Your Company</p>
+        </SidebarFooter>
     </Sidebar>
   )
 }

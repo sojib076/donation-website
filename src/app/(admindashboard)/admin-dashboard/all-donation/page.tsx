@@ -68,7 +68,7 @@ export default function DonationsList() {
             description: "The donation has been successfully deleted.",
         })
     }
-    const newthreeDonations = donations.slice(0, 3)
+   
 
     const handleUpdate = (id: number) => {
         router.push(`/dashboard/donations/edit/${id}`)

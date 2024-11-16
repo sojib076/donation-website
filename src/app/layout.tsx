@@ -1,5 +1,5 @@
 
-import { Toaster } from "@/components/ui/toaster";
+
 import "./globals.css";
 import { Poppins } from 'next/font/google';
 
@@ -22,10 +22,11 @@ export default function RootLayout({
     <html lang="en">
       <body
       className={`antialiased ${poppins.className}`}
-       
       >
+      
         {children}
-        <Toaster />
+     
+        
 
       </body>
     </html>

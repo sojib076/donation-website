@@ -84,17 +84,17 @@ export default function BlogDetails() {
         <div className="prose max-w-none space-y-3">
           <p>In the heart of rural Tanzania, a small village has undergone a remarkable transformation. Just a year ago, access to clean water was a daily struggle for its inhabitants. Today, thanks to the generous donations from our supporters, a new well provides fresh, safe water to over 500 people.</p>
 
-          <p>This is just one example of how your contributions are making a real, tangible difference in people's lives. From building schools in remote areas to providing medical supplies to underserved communities, every donation, no matter how small, contributes to creating lasting change.</p>
+          <p>This is just one example of how your contributions are making a real, tangible difference in peoples lives. From building schools in remote areas to providing medical supplies to underserved communities, every donation, no matter how small, contributes to creating lasting change.</p>
           <h2>The Ripple Effect of Generosity</h2>
-          <p>When we improve one aspect of a community's life, the benefits often extend far beyond our initial goals. In the case of the Tanzanian village:</p>
+          <p>When we improve one aspect of a communitys life, the benefits often extend far beyond our initial goals. In the case of the Tanzanian village:</p>
           <ul>
             <li>Children, especially girls, now spend less time fetching water and more time in school.</li>
             <li>The incidence of waterborne diseases has dramatically decreased, improving overall community health.</li>
             <li>Local agriculture has flourished with reliable access to water for crops and livestock.</li>
           </ul>
-          <p>Your donations don't just solve immediate problems; they create opportunities for sustainable development and brighter futures.</p>
+          <p>Your donations dont just solve immediate problems; they create opportunities for sustainable development and brighter futures.</p>
           <h2 className='font-semibold'>Join Our Latest Campaign</h2>
-          <p>Inspired by the success of our water project in Tanzania, we're launching a new campaign to bring clean water to 10 more villages across East Africa. Your continued support can help us reach this ambitious goal and change thousands more lives.</p>
+          <p>Inspired by the success of our water project in Tanzania, were launching a new campaign to bring clean water to 10 more villages across East Africa. Your continued support can help us reach this ambitious goal and change thousands more lives.</p>
         </div>
       </article>
 
@@ -107,7 +107,7 @@ export default function BlogDetails() {
             <CardTitle>Help Us Reach 10 More Villages</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="mb-4">Our new Clean Water Initiative aims to provide sustainable water solutions to 10 villages in East Africa, impacting over 5,000 lives. Here's how you can get involved:</p>
+            <p className="mb-4">Our new Clean Water Initiative aims to provide sustainable water solutions to 10 villages in East Africa, impacting over 5,000 lives. Heres how you can get involved:</p>
             <ul className="list-disc list-inside mb-6">
               <li>Donate directly to the campaign</li>
               <li>Share our campaign with your network</li>

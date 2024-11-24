@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { PenTool, ImageIcon, FolderOpen, Megaphone, Upload } from 'lucide-react'
+import Image from 'next/image'
 
 export default function ModernAdminBlogPage() {
   const [title, setTitle] = useState('')
@@ -100,7 +101,10 @@ export default function ModernAdminBlogPage() {
                                 selectedImage === img ? 'border-blue-500 ring-2 ring-blue-500' : 'border-gray-300'
                               }`}
                             >
-                              <img src={img} alt={`Previous upload ${index + 1}`} className="w-full h-auto" />
+                              <Image  
+                                width={200}
+                                height={200}
+                              src={img} alt={`Previous upload ${index + 1}`} className="w-full h-auto" />
                             </Label>
                           </div>
                         ))}

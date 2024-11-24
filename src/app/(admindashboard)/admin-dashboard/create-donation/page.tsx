@@ -7,13 +7,14 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { PlusCircle } from 'lucide-react'
 
-import { toast } from '@/hooks/use-toast'
+import { useCreateDonation } from '@/hooks/Donation.hook'
 
 export default function CreateDonation() {
   const [title, setTitle] = useState('')
   const [TargetAmount, setTargetAmount] = useState('')
   const [image, setImage] = useState() as any
-  const [imagePreview, setImagePreview] = useState() as any
+  const [imagePreview, setImagePreview] = useState<string>('')
+  const { mutate: createDonation, isSuccess, } = useCreateDonation()
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -29,12 +30,24 @@ export default function CreateDonation() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    toast({
-      title: " Donation Created",
-      description: " Donation has been created successfully",
-    })
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('target', TargetAmount);
+    formData.append('description', "This is a test description");
+    if (image) {
+      formData.append('image', image);
+    }
 
-  
+    createDonation(formData)
+
+
+    if (isSuccess) {
+      setTitle('')
+      setTargetAmount('')
+      setImage(undefined)
+      setImagePreview('')
+
+    }
 
 
 
@@ -65,12 +78,21 @@ export default function CreateDonation() {
               <div className="flex justify-center">
                 <label htmlFor="image-upload" className="cursor-pointer">
                   <div className="min-w-[900px] h-64 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
-                    {image ? (
-                      <img src={imagePreview} alt="Uploaded" className="max-w-full max-h-full object-fill z-0 " />
+                    {imagePreview ? (
+                      <Image
+                        src={imagePreview}
+                        alt="Uploaded"
+                        width={400}
+                        height={400}
+                        className="max-w-full max-h-full object-fill z-0"
+                      />
                     ) : (
-                      <span className="text-gray-500 z-30 "><PlusCircle></PlusCircle></span>
+                      <span className="text-gray-500 z-30">
+                        <PlusCircle />
+                      </span>
                     )}
                   </div>
+
                   <input
                     id="image-upload"
                     type="file"

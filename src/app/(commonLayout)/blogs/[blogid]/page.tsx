@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Calendar, User, Share2, Heart, ArrowRight, Send } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { toast } from '@/hooks/use-toast'
+import Image from 'next/image'
 
 
 export default function BlogDetails() {
@@ -80,7 +81,10 @@ export default function BlogDetails() {
           <User className="h-4 w-4 mr-1" />
           <span>Sarah Johnson</span>
         </div>
-        <img src="/placeholder.svg?height=400&width=800" alt="Featured image" className="w-full h-64 object-cover rounded-lg mb-6" />
+        <Image 
+          height={400}
+          width={800}
+        src="/placeholder.svg?height=400&width=800" alt="Featured image" className="w-full h-64 object-cover rounded-lg mb-6" />
         <div className="prose max-w-none space-y-3">
           <p>In the heart of rural Tanzania, a small village has undergone a remarkable transformation. Just a year ago, access to clean water was a daily struggle for its inhabitants. Today, thanks to the generous donations from our supporters, a new well provides fresh, safe water to over 500 people.</p>
 
@@ -175,7 +179,11 @@ export default function BlogDetails() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[1, 2].map((post) => (
             <Card key={post}>
-              <img src={`/placeholder.svg?height=200&width=400&text=Related ${post}`} alt={`Related post ${post}`} className="w-full h-48 object-cover rounded-t-lg" />
+              <Image
+                height={200}
+                width={400} 
+                
+              src={`/placeholder.svg?height=200&width=400&text=Related ${post}`} alt={`Related post ${post}`} className="w-full h-48 object-cover rounded-t-lg" />
               <CardHeader>
                 <CardTitle className="text-xl">Empowering Communities Through Education</CardTitle>
               </CardHeader>

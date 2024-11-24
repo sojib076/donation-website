@@ -1,37 +1,73 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+export type Donation = {
+    _id: number
+    title: string
+    description: string
+    status: 'active' | 'completed'
+    target: number
+    current: number
+    progress: number
+    image: string
+}
+const Card = ({data}:{
+    data:Donation
+}) => {
+    
 
-const Card = (data:any) => {
+
     return (
-        <div key={data.id} className="lg:max-w-[400px]  bg-white rounded-lg shadow-lg overflow-hidden">
+        <div key={data._id} className="lg:max-w-[400px]  bg-white rounded-lg shadow-lg overflow-hidden">
 
-            <div className="relative h-[250px] bg-gray-300">
+            <div className="relative h-[250px] ">
+                <Image
+                
+                height={250}
+                width={400}
+
+                src={data.image} alt="" 
+
+                className="w-full h-full object-cover "
+                />
 
                 <div className="absolute top-4 right-4 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                    Environment
+                    {
+                        data.status === 'active' ? 'Active' : 'Completed'
+                    }
                 </div>
+
             </div>
 
 
             <div className="p-6">
                 <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                    Plant Tree, Save Earth & Lives Secure the Future
+                    {data.title}
                 </h2>
                 <p className="text-sm text-gray-600 mb-6">
-                    Massa sed elementum tempus egestas sed sed risus pretium quam. Bibendum neque egestas congue quisque egestas diam.
+                    {data.description}
                 </p>
 
                 {/* Progress Info */}
                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-800">$7,250 Raised</span>
-                    <span className="text-sm font-medium text-gray-800">35%</span>
-                    <span className="text-sm font-medium text-gray-800">$20,000 Goal</span>
+                    <span className="text-sm font-medium text-gray-800"> 
+                        ${data.current} Raised
+                    </span>
+                    <span className="text-sm font-medium text-gray-800"> 
+                        
+                        {/* get the percetnt */}
+                        {data.progress}%
+
+                    </span> 
+                    <span className="text-sm font-medium text-gray-800">
+                        ${data.target} Target
+                    </span>
 
                 </div>
 
                 {/* Progress Bar */}
                 <div className="relative w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-4">
-                    <div className="h-full bg-green-500" style={{ width:   50 }} />
+                    <div style={{ width: `${data.progress}%` }} className="h-2 bg-green-500"></div>
 
                 </div>
 

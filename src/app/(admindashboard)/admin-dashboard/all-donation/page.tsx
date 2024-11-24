@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -25,27 +25,23 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Pencil, Trash2, CheckCircle, MoreHorizontal, Search, DollarSign } from 'lucide-react'
-import { toast } from '@/hooks/use-toast'
-import Image from 'next/image'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Progress } from '@radix-ui/react-progress'
 
-// This would typically come from your API or database
-const initialDonations: Donation[] = [
-    { id: 1, title: 'Help Local Food Bank', description: 'Support our community by donating to the local food bank.', image: '/placeholder.svg?height=100&width=200', status: 'active', target: 5000, current: 3750 },
-    { id: 2, title: 'School Supplies for Kids', description: 'Provide school supplies for underprivileged children.', image: '/placeholder.svg?height=100&width=200', status: 'active', target: 2000, current: 1500 },
-    { id: 3, title: 'Animal Shelter Support', description: 'Help our local animal shelter care for abandoned pets.', image: '/placeholder.svg?height=100&width=200', status: 'completed', target: 3000, current: 3000 },
-    { id: 4, title: 'Community Garden Project', description: 'Create a sustainable community garden.', image: '/placeholder.svg?height=100&width=200', status: 'active', target: 7500, current: 5200 },
-    { id: 5, title: 'Youth Sports Program', description: 'Fund equipment for underprivileged youth sports teams.', image: '/placeholder.svg?height=100&width=200', status: 'completed', target: 4000, current: 4000 },
-]
+
+
+import { useDeleteDonation, useGetDonations, useMarkDonationAsCompleted } from '@/hooks/Donation.hook'
+import { Skeleton } from '@/components/ui/skeleton'
+import Image from 'next/image'
+import { toast } from '@/hooks/use-toast'
+
+
+
 
 
 type Donation = {
-    id: number
+    _id: string
     title: string
     description: string
     status: 'active' | 'completed'
@@ -54,48 +50,81 @@ type Donation = {
     image: string
 }
 
+
+
 export default function DonationsList() {
-    const [donations, setDonations] = useState<Donation[]>(initialDonations)
+    const [currentPage, setCurrentPage] = useState(1)
+    const itemsPerPage = 6
+
+    const { data, isPending, isSuccess, refetch } = useGetDonations(currentPage, itemsPerPage)
+    const {mutate:deleteDonation,isPending:deleteLoading,isSuccess:deleteSucces}= useDeleteDonation()
+    const {mutate:markAsDone}=useMarkDonationAsCompleted()
+    
+    const initialDonations = data?.data?.donations as Donation[]
     const [searchTerm, setSearchTerm] = useState('')
     const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'completed'>('all')
     const [hoveredDonation, setHoveredDonation] = useState<Donation | null>(null)
+
+
     const router = useRouter()
 
-    const handleDelete = (id: number) => {
-        setDonations(donations.filter(donation => donation.id !== id))
-        toast({
-            title: "Donation Deleted",
-            description: "The donation has been successfully deleted.",
-        })
-    }
-   
 
-    const handleUpdate = (id: number) => {
+
+
+    const handleDelete = (id: string) => {
+        deleteDonation(id)
+
+        if(deleteSucces){
+            toast({
+                title: 'Donation deleted successfully',
+                description: 'Your donation has been deleted successfully',
+              })
+        }
+    }
+
+
+    const handleUpdate = (id: string) => {
         router.push(`/dashboard/donations/edit/${id}`)
     }
 
-    const handleMarkDone = (id: number) => {
-        setDonations(donations.map(donation =>
-            donation.id === id ? { ...donation, status: 'completed', current: donation.target } : donation
-        ))
-        toast({
-            title: "Donation Marked as Done",
-            description: "The donation has been marked as completed.",
-        })
+    const handleMarkDone = (id: string) => {
+        
+        markAsDone(id)
+        
     }
 
-    const filteredDonations = donations.filter(donation =>
-        donation.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (statusFilter === 'all' || donation.status === statusFilter)
-    )
+
+    const pageCount = Math.ceil(initialDonations?.length / itemsPerPage)
+
+    const handlenextPage = () => {
+        setCurrentPage(currentPage + 1)
+
+        refetch()
+    }
+
+    const handlePreviousPage = () => {
+        setCurrentPage(currentPage - 1)
+        refetch()
+    }
+
+    console.log(currentPage);
+
 
     return (
         <div className="container mx-auto py-10 px-4">
-            
+
 
             <div className="container mx-auto py-10 px-4">
-              
 
+                <div className="flex justify-end mb-6">
+                    <Button
+                        onClick={() => router.push('/admin-dashboard/create-donation')}
+                        className="flex items-center space-x-2"
+                    >
+                        <DollarSign className="h-4 w-4" />
+                        <span>Create Donation</span>
+                    </Button>
+                </div>
                 <div className="flex flex-col md:flex-row gap-4 mb-6">
                     <div className="relative flex-grow">
                         <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -118,8 +147,14 @@ export default function DonationsList() {
                     </Select>
                 </div>
 
-                <div className="rounded-md border relative">
+
+
+
+                <div className="rounded-md border relative min-h-[50vh]">
+
+
                     <Table>
+
                         <TableHeader>
                             <TableRow>
                                 <TableHead>Title</TableHead>
@@ -130,10 +165,41 @@ export default function DonationsList() {
                                 <TableHead className="text-right">Actions</TableHead>
                             </TableRow>
                         </TableHeader>
+                        {
+                            isSuccess && initialDonations.length === 0 && <div className="text-center">No Donations Found</div>
+                        }
+                        {
+                            isPending &&
+                            <TableBody>
+                                {[...Array(5)].map((_, index) => (
+                                    <TableRow key={index} className="animate-pulse">
+                                        <TableCell className="font-medium">
+                                            <Skeleton className="h-4 w-3/4" />
+                                        </TableCell>
+                                        <TableCell>
+                                            <Skeleton className="h-5 w-20" />
+                                        </TableCell>
+                                        <TableCell>
+                                            <Skeleton className="h-4 w-16" />
+                                        </TableCell>
+                                        <TableCell>
+                                            <Skeleton className="h-4 w-16" />
+                                        </TableCell>
+                                        <TableCell>
+                                            <Skeleton className="h-2.5 w-full" />
+                                        </TableCell>
+                                        <TableCell className="text-right">
+                                            <Skeleton className="h-8 w-8 rounded-full ml-auto" />
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        }
                         <TableBody>
-                            {filteredDonations.map((donation) => (
+
+                            {initialDonations?.map((donation) => (
                                 <TableRow
-                                    key={donation.id}
+                                    key={donation._id}
                                     className="cursor-pointer"
 
                                 >
@@ -167,14 +233,14 @@ export default function DonationsList() {
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end">
                                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                <DropdownMenuItem onClick={() => handleUpdate(donation.id)}>
+                                                <DropdownMenuItem onClick={() => handleUpdate(donation._id)}>
                                                     <Pencil className="mr-2 h-4 w-4" /> Update
                                                 </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => handleDelete(donation.id)}>
+                                                <DropdownMenuItem onClick={() => handleDelete(donation._id)}>
                                                     <Trash2 className="mr-2 h-4 w-4" /> Delete
                                                 </DropdownMenuItem>
                                                 {donation.status === 'active' && (
-                                                    <DropdownMenuItem onClick={() => handleMarkDone(donation.id)}>
+                                                    <DropdownMenuItem onClick={() => handleMarkDone(donation._id)}>
                                                         <CheckCircle className="mr-2 h-4 w-4" /> Mark as Done
                                                     </DropdownMenuItem>
                                                 )}
@@ -184,22 +250,45 @@ export default function DonationsList() {
                                 </TableRow>
                             ))}
                         </TableBody>
+
                     </Table>
                     {hoveredDonation && (
                         <div className="absolute lg:left-56  top-[-150px] bg-white p-4 rounded-md shadow-lg border border-gray-200 min-w-64">
                             <Image
-                                src={hoveredDonation.image}
-                                alt={hoveredDonation.title}
-                                width={200}
-                                height={100}
-                                className="rounded-md mb-2"
+                                src={hoveredDonation?.image}
+                                alt={hoveredDonation?.title}
 
+                                className="rounded-md mb-2  
+                                w-full h-32 object-cover object-center
+                                "
+                                width={300}
+                                height={300}
                             />
                             <h3 className="font-semibold text-sm mb-1">{hoveredDonation.title}</h3>
                             <p className="text-xs text-gray-500">{hoveredDonation.description}</p>
                         </div>
                     )}
                 </div>
+            </div>
+            <div className="mt-4 flex justify-center">
+                <Button
+                    onClick={handlePreviousPage}
+                    disabled={currentPage === 1 || isPending}
+
+                    className="mr-2"
+                >
+                    Previous
+                </Button>
+                <span className="mx-4 self-center">
+                    Page {data?.data?.currentPage} of {data?.data?.totalPages}
+                </span>
+                <Button
+                    onClick={handlenextPage}
+                    disabled={currentPage === data?.data?.totalPages || isPending}
+                    className="ml-2"
+                >
+                    Next
+                </Button>
             </div>
         </div >
     )

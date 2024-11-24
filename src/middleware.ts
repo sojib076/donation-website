@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { getCurrentUser } from "./Services";

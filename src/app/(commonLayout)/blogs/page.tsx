@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Search, Calendar, User, ArrowRight } from 'lucide-react'
+import Image from "next/image"
 
 export default function ModernDonationBlog() {
   return (
@@ -21,7 +22,10 @@ export default function ModernDonationBlog() {
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
         <Card className="md:col-span-8 overflow-hidden">
-          <img src="/placeholder.svg?height=400&width=800" alt="Featured post" className="w-full h-64 object-cover" />
+          <Image 
+            height={400}
+            width={800}
+          src="/placeholder.svg?height=400&width=800" alt="Featured post" className="w-full h-64 object-cover" />
           <CardHeader>
             <CardTitle className="text-3xl">Making a Difference: How Your Donations Change Lives</CardTitle>
           </CardHeader>
@@ -46,7 +50,11 @@ export default function ModernDonationBlog() {
           <h2 className="text-2xl font-bold mb-4">Trending Stories</h2>
           {[1, 2, 3].map((post) => (
             <Card key={post} className="flex overflow-hidden">
-              <img src={`/placeholder.svg?height=100&width=100&text=${post}`} alt={`Trending post ${post}`} className="w-1/3 object-cover" />
+              <Image 
+              
+              height={100}
+              width={100}
+              src={`/placeholder.svg?height=100&width=100&text=${post}`} alt={`Trending post ${post}`} className="w-1/3 object-cover" />
               <div className="w-2/3 p-4">
                 <h3 className="font-semibold mb-2">Education Initiative Reaches Milestone</h3>
                 <p className="text-sm text-muted-foreground">Our program has now helped over 10,000 children access quality education.</p>
@@ -61,7 +69,11 @@ export default function ModernDonationBlog() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {[1, 2, 3, 4, 5, 6].map((post) => (
           <Card key={post}>
-            <img src={`/placeholder.svg?height=200&width=400&text=Post ${post}`} alt={`Post ${post}`} className="w-full h-48 object-cover" />
+            <Image 
+            
+            height={200}
+            width={400}
+            src={`/placeholder.svg?height=200&width=400&text=Post ${post}`} alt={`Post ${post}`} className="w-full h-48 object-cover" />
             <CardHeader>
               <CardTitle className="text-xl">Empowering Communities Through Sustainable Agriculture</CardTitle>
             </CardHeader>

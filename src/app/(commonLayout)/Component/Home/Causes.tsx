@@ -1,3 +1,6 @@
+"use client";
+
+
 import {
     Carousel,
     CarouselContent,
@@ -6,9 +9,17 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel"
 import { Play } from "lucide-react";
-import Card from "../../CommonDesing/Card";
+import Card, { Donation } from "../../CommonDesing/Card";
+import { useState } from "react";
+import { useGetDonations } from "@/hooks/Donation.hook";
+import Cardloading from "../Cardloading";
 
 const Causes = () => {
+    const [page, setPage] = useState(1)
+
+    const { data, isLoading, isError, refetch } = useGetDonations(page, 3);
+
+    const datas = data?.data?.donations
     return (
         <div className="mt-[120px]">
             <h6 className=" text-center text-[#27ae60] lg:text-xl  text-lg font-semibold    ">Causes</h6>
@@ -20,15 +31,38 @@ const Causes = () => {
 
 
                 >
+
+
+
+
                     <CarouselContent>
-                        { 
-                        
-                        Array.from({ length: 6 }).map((_, index) => (
-                            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 lg:p-5">
-                              <Card   />
-                            </CarouselItem>
-                        ))}
+
+                        {
+                            isLoading ? (
+                                
+                                Array.from({ length: 3 }).map((_, index) => (
+                                    <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 lg:p-5">
+                                   <Cardloading key={index} />
+                                    </CarouselItem>
+
+                                )))
+                                   
+                             :
+
+
+                                datas?.map((donation: Donation) => (
+                                    <CarouselItem key={donation._id} className="md:basis-1/2 lg:basis-1/3 lg:p-5">
+                                        <Card data={donation} />
+                                    </CarouselItem>
+                                ))
+                        }
+
+
+
+
+
                     </CarouselContent>
+
 
                     <div className="relative  justify-between lg:hidden">
                         <CarouselPrevious className="absolute lg:static left-[100px] lg:left-auto" />
@@ -54,7 +88,7 @@ const Causes = () => {
                         <h6 className=" mx-auto text-center text-[#27ae60] text-sm font-semibold leading-relaxed">Watch Our Video</h6>
                         <h3 className="lg:max-w-[700px] mx-auto text-center text-white lg:text-[40px] text-xl font-semibold
                          font-['Poppins'] lg:leading-[46px]">The Measure of a Life is not its Duration, but its Donation</h3>
-                        
+
                         <div className="flex justify-center mt-8">
                             <button className="relative w-16 h-16 rounded-full bg-mycustomcolors-primary text-white flex items-center justify-center shadow-lg hover:bg-mycustomcolors-secondary transition-all duration-300 ease-in-out transform hover:scale-105">
                                 <Play size={32} className="text-white" />

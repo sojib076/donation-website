@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Bell, ChevronDown, LogOut, Settings, User } from 'lucide-react'
+import {  ChevronDown, LogOut, Settings, User } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -13,18 +13,34 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import Link from 'next/link'
+import { logoutUserCookes } from '@/Services/AuthServices'
+import { logout } from '@/Redux/slices/authSlice'
+import { useDispatch } from 'react-redux'
+import { useRouter } from 'next/navigation'
+
+
 
 export default function DashboardHeader() {
+
+    
+    const router = useRouter();
+
     const [user, setUser] = useState({
         name: 'John Doe',
         email: 'john@example.com',
         avatarUrl: 'https://github.com/shadcn.png',
     })
 
-    const handleLogout = () => {
+    const dispatch = useDispatch();
+    
+    
+    const handleLogout = async () => {
+       
+        dispatch(logout());
+       await  logoutUserCookes()
+        window.location.href = '/'
         
-        console.log('User logged out')
-    }
+    };
 
     return (
         <header className=" ">

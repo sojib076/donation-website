@@ -8,6 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Grid, List, Upload, X } from 'lucide-react'
+import Image from 'next/image'
 
 // Mock function to simulate image upload
 const uploadImage = async (file: File, name: string): Promise<{ id: string, name: string, url: string }> => {
@@ -100,7 +101,10 @@ export default function Component() {
               </div>
               {uploadPreview && (
                 <div className="relative">
-                  <img src={uploadPreview} alt="Upload preview" className="w-full h-48 object-cover rounded-md" />
+                  <Image 
+                    height={200}
+                    width={200}
+                  src={uploadPreview} alt="Upload preview" className="w-full h-48 object-cover rounded-md" />
                   <Button
                     size="icon"
                     variant="destructive"
@@ -162,7 +166,11 @@ export default function Component() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {images.map(image => (
             <div key={image.id} className="group relative overflow-hidden rounded-lg shadow-md transition-all hover:shadow-lg">
-              <img src={image.url} alt={image.name} className="w-full h-48 object-cover transition-transform group-hover:scale-105" />
+              <Image 
+                height={200}
+                width={200}
+              
+              src={image.url} alt={image.name} className="w-full h-48 object-cover transition-transform group-hover:scale-105" />
               <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
                 <p className="text-white p-2 text-sm truncate w-full">{image.name}</p>
               </div>
@@ -182,7 +190,10 @@ export default function Component() {
               {images.map(image => (
                 <TableRow key={image.id}>
                   <TableCell>
-                    <img src={image.url} alt={image.name} className="w-16 h-16 object-cover rounded-md" />
+                    <Image 
+                      height={64}
+                      width={64}
+                    src={image.url} alt={image.name} className="w-16 h-16 object-cover rounded-md" />
                   </TableCell>
                   <TableCell>{image.name}</TableCell>
                 </TableRow>

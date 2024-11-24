@@ -1,18 +1,26 @@
 
 "use client";
-
-import { AlignCenterHorizontal, AlignCenterIcon, Clock, Phone, X } from "lucide-react";
+import { AlignCenterIcon, Clock, Phone, X } from "lucide-react";
 import Link from "next/link";
 import { BsInstagram, BsYoutube } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useSelector } from "react-redux";
+import { RootState } from "@/Redux/store";
+import { useDispatch } from "react-redux";
+import { logout } from "@/Redux/slices/authSlice";
+import { logoutUserCookes } from "@/Services/AuthServices";
 
 
 const Header = () => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-
+    const dispatch = useDispatch();
+    
+    const logoutuser = () => {
+        dispatch(logout());
+        logoutUserCookes()
+    };
 
     const Routes = [{
         name: 'Home',
@@ -25,8 +33,6 @@ const Header = () => {
         name: 'Causes',
         path: '/causes'
     },
-
-    
     {
         name: 'Contact',
         path: '/contact'
@@ -37,6 +43,9 @@ const Header = () => {
     }
     ]
 
+    const User = useSelector((state: RootState) => state.auth);
+    const role = User.user?.role;
+    const roleLink = role === 'admin' ? '/admin-dashboard' : '/user/dashboard';
     return (
         <div>
 
@@ -91,6 +100,55 @@ const Header = () => {
                             </h1>
                         </Link>
                     ))}
+
+                    {User.isAuthenticated ? (
+                      <div className="flex gap-5"> 
+                          <button
+                            onClick={logoutuser}
+                            className="cursor-pointer relative group transition-all hover:text-primary-100 font-semibold"
+                        >
+                            Logout
+                            <span
+                                className={`absolute bottom-0 left-0 h-[2px] w-0 bg-primaryown group-hover:w-full group-hover:transition-all`}
+                                style={{
+                                    transitionDuration: '0.5s',
+                                }}
+                            ></span>
+                        </button>
+                            <Link href={roleLink}>
+                            <h1
+                                className={`cursor-pointer relative group transition-all hover:text-primary-100 font-semibold`}
+                            >
+                                Dashboard
+                                <span
+                                    className={`absolute bottom-0 left-0 h-[2px] w-0 bg-primaryown group-hover:w-full group-hover:transition-all`}
+                                    style={{
+                                        transitionDuration: '0.5s',
+                                    }}
+                                ></span>
+                            </h1>
+                        </Link>
+                      </div>
+
+                    ) : (
+                       <div className="flex gap-5"> 
+                         <Link href="/login">
+                            <h1
+                                className={`cursor-pointer relative group transition-all hover:text-primary-100 font-semibold`}
+                            >
+                                Login
+                                <span
+                                    className={`absolute bottom-0 left-0 h-[2px] w-0 bg-primaryown group-hover:w-full group-hover:transition-all`}
+                                    style={{
+                                        transitionDuration: '0.5s',
+                                    }}
+                                ></span>
+                            </h1>
+                        </Link>
+                       
+                       </div>
+
+                    )}
 
                 </div>
 

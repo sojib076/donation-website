@@ -6,8 +6,11 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { PlusCircle } from 'lucide-react'
-
+import { Editor, EditorState, RichUtils } from "draft-js";
+import "draft-js/dist/Draft.css";
 import { useCreateDonation } from '@/hooks/Donation.hook'
+import { stateToHTML } from "draft-js-export-html";
+
 
 export default function CreateDonation() {
   const [title, setTitle] = useState('')
@@ -15,6 +18,8 @@ export default function CreateDonation() {
   const [image, setImage] = useState() as any
   const [imagePreview, setImagePreview] = useState<string>('')
   const { mutate: createDonation, isSuccess, } = useCreateDonation()
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [htmlContent, setHtmlContent] = useState("");
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -27,19 +32,20 @@ export default function CreateDonation() {
       reader.readAsDataURL(file)
     }
   }
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
+    console.log('submitting');
     e.preventDefault()
     const formData = new FormData();
     formData.append('title', title);
     formData.append('target', TargetAmount);
-    formData.append('description', "This is a test description");
+    formData.append('description',  htmlContent);
     if (image) {
       formData.append('image', image);
     }
 
+ 
     createDonation(formData)
-
 
     if (isSuccess) {
       setTitle('')
@@ -47,13 +53,27 @@ export default function CreateDonation() {
       setImage(undefined)
       setImagePreview('')
 
+
     }
-
-
-
+   
 
   }
 
+ 
+  const toggleInlineStyle = (style) => {
+
+    setEditorState(RichUtils.toggleInlineStyle(editorState, style));
+  };
+
+
+  const saveContentAsHTML = () => {
+    const content = editorState.getCurrentContent();
+    const html = stateToHTML(content);
+    setHtmlContent(html); 
+    console.log("HTML Content:", html); 
+  };
+
+  
   return (
     <div className='py-10 px-5 min-h-screen'>
       <Card className="w-full max-w-5xl mx-auto">
@@ -115,9 +135,63 @@ export default function CreateDonation() {
                 />
               </div>
 
+              <div className="p-4 border rounded-md bg-gray-50 shadow-sm">
+                <h2 className="mb-4 text-xl font-bold">Rich Text Editor</h2>
+
+               
+                <div className="mb-2 space-x-2 grid grid-cols-3 ">
+                  <div
+                    onClick={() => toggleInlineStyle("BOLD")}
+                    
+                    className="px-3 py-1 bg-blue-500 text-white rounded w-fit cursor-pointer"
+                  >
+                    Bold
+                  </div>
+                  <div
+                    onClick={() => toggleInlineStyle("ITALIC")}
+                    className="px-3 py-1 bg-green-500 text-white rounded w-fit  cursor-pointer"
+                  >
+                    Italic
+                  </div>
+                  <div
+                    onClick={() => toggleInlineStyle("UNDERLINE")}
+                    className="px-3 py-1 bg-purple-500 text-white rounded w-fit cursor-pointer"
+                  >
+                    Underline
+                  </div>
+                </div>
+
+                {/* Editor */}
+                <div className="p-2 border rounded bg-white"
+                  onMouseLeave={saveContentAsHTML}
+                >
+                  <Editor
+                    editorState={editorState}
+                    onChange={setEditorState}
+                  
+                    
+                    placeholder="Start writing your rich text here..."
+                  />
+                </div>
+
+              
+
+                {/* Display Saved HTML */}
+                {htmlContent && (
+                  <div className="mt-4 p-2 border rounded bg-gray-100">
+                    <h3 className="font-bold mb-2">HTML Content:</h3>
+                    <div dangerouslySetInnerHTML={{ __html: htmlContent }}></div>
+                  </div>
+                )}
+              </div>
 
             </div>
-            <Button type="submit" className="w-full h-10 bg-mycustomcolors-secondary/80 hover:bg-mycustomcolors-secondary/80  ">Create Donation</Button>
+            <Button
+             
+            type="submit" className="w-full h-10 bg-mycustomcolors-secondary/80 hover:bg-mycustomcolors-secondary/80 
+            
+            
+            ">Create Donation</Button>
           </form>
 
         </CardContent>

@@ -7,8 +7,8 @@ export const createDonation = async (donation:any) => {
     try {
       const { data } = await axiosInstance.post("/admin/create-donation", donation);
   
-        
-        console.log(data);
+  
+        console.log(data,'data from donation');
       return data;
     } catch (error: any) {
         console.log(error,'error');
@@ -41,6 +41,17 @@ export const markDonationAsCompleted = async (id: any) => {
   console.log(id,'id');
     try {
       const { data } = await axiosInstance.patch(`/admin/mark-donation-as-collected/${id}`);
+  
+      return data;
+    } catch (error: any) {
+      return error?.response?.data;
+    }
+};
+
+
+export const getDonationById = async (id: any) => {
+    try {
+      const { data } = await axiosInstance.get(`/admin/get-donation/${id}`);
   
       return data;
     } catch (error: any) {

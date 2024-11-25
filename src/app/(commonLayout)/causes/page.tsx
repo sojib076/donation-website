@@ -10,7 +10,7 @@ import Cardloading from "../Component/Cardloading";
 
 const Causes = () => {
     const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState(1)
+    const [limit, setLimit] = useState(10)
     const { data, isLoading, isError, refetch } = useGetDonations(page, limit);
 
 
@@ -37,7 +37,7 @@ const Causes = () => {
                 <div className="mt-[120px]">
 
                     {
-                        isLoading && <div className="grid grid-cols-3 gap-5 lg:px-28 px-5">
+                        isLoading && <div className="grid lg:grid-cols-3 gap-5 lg:px-28 px-5">
                             {/* fale array  */}
                             {
                                 Array.from({ length: 3 }).map((_, index) => (

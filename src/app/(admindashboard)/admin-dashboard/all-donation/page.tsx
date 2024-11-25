@@ -54,7 +54,7 @@ type Donation = {
 
 export default function DonationsList() {
     const [currentPage, setCurrentPage] = useState(1)
-    const itemsPerPage = 6
+    const itemsPerPage = 10
 
     const { data, isPending, isSuccess, refetch } = useGetDonations(currentPage, itemsPerPage)
     const {mutate:deleteDonation,isPending:deleteLoading,isSuccess:deleteSucces}= useDeleteDonation()
@@ -259,13 +259,17 @@ export default function DonationsList() {
                                 alt={hoveredDonation?.title}
 
                                 className="rounded-md mb-2  
-                                w-full h-32 object-cover object-center
+                                w-full max-h-52 object-cover object-center
                                 "
                                 width={300}
                                 height={300}
                             />
                             <h3 className="font-semibold text-sm mb-1">{hoveredDonation.title}</h3>
-                            <p className="text-xs text-gray-500">{hoveredDonation.description}</p>
+                            {/* dangeours html make it show leess contetnt crop the test  */}
+
+                           
+                           
+                            
                         </div>
                     )}
                 </div>

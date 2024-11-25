@@ -1,5 +1,5 @@
-import { createDonation, deleteDonation, getDonations, markDonationAsCompleted } from "@/Services/DonationServices";
-import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createDonation, deleteDonation, getDonationById, getDonations, markDonationAsCompleted } from "@/Services/DonationServices";
+import {  useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "./use-toast";
 
 
@@ -8,7 +8,7 @@ export const useCreateDonation= ( ) => {
       return useMutation({
         mutationKey: ["CREATE_DONATION"],
         mutationFn: async (donation:FormData) => await createDonation (donation),
-        onSuccess: (data) => {
+        onSuccess: () => {
           toast({
             title: 'Donation created successfully',
             description: 'Your donation has been created successfully',
@@ -16,7 +16,14 @@ export const useCreateDonation= ( ) => {
 
           queryClient.invalidateQueries({ queryKey: ["GET_DONATIONS"] });
             
-        }
+        },
+        onError: (error) => {
+          console.log(error);
+          toast({
+            title: 'Error',
+            description: 'An error occurred while creating donation',
+          } as any);
+        },
 
       
       });
@@ -84,3 +91,15 @@ export const useCreateDonation= ( ) => {
             }
     }  
     )}
+
+    // get donation by id
+    export const useGetDonationById = (id: string) => {
+  
+      return useQuery({
+          queryKey: ["GET_DONATION_BY_ID", id],
+          queryFn: async () => await getDonationById(id),
+          refetchOnWindowFocus: true,
+          
+          
+      });
+  }

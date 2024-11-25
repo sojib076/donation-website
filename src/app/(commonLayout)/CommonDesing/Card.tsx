@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import DOMPurify from 'dompurify';
 export type Donation = {
     _id: number
     title: string
@@ -15,6 +16,8 @@ const Card = ({data}:{
     data:Donation
 }) => {
     
+    
+    const slicededDescription = data.description.slice(0, 100);
 
 
     return (
@@ -44,9 +47,10 @@ const Card = ({data}:{
                 <h2 className="text-xl font-semibold text-gray-800 mb-4">
                     {data.title}
                 </h2>
-                <p className="text-sm text-gray-600 mb-6">
-                    {data.description}
-                </p>
+                <div className="text-sm text-gray-600 mb-4">
+                    <div dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(slicededDescription)}}></div>
+                </div>
+              
 
                 {/* Progress Info */}
                 <div className="flex justify-between items-center mb-2">
@@ -72,7 +76,7 @@ const Card = ({data}:{
                 </div>
 
               
-                <Link href="/causes/1">
+                <Link href={`causes/${data._id}?title=${data.title}`}>
                 <button className="w-full py-3 bg-orange-500 text-white font-semibold  rounded-md hover:bg-orange-600 transition duration-200">
                     Donate Now
                 </button>

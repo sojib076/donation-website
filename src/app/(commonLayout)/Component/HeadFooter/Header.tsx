@@ -4,7 +4,7 @@ import { AlignCenterIcon, Clock, Phone, X } from "lucide-react";
 import Link from "next/link";
 import { BsInstagram, BsYoutube } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useSelector } from "react-redux";
 import { RootState } from "@/Redux/store";
@@ -42,6 +42,19 @@ const Header = () => {
         path: '/blogs'
     }
     ]
+
+    // useEffect(() => {
+    //   const handleBeforeUnload = () => {
+    //     dispatch(logout()); 
+    //     logoutUserCookes()
+    //   };
+  
+    //   window.addEventListener('beforeunload', handleBeforeUnload);
+  
+    //   return () => {
+    //     window.removeEventListener('beforeunload', handleBeforeUnload);
+    //   };
+    // }, [dispatch]);
 
     const User = useSelector((state: RootState) => state.auth);
     const role = User.user?.role;

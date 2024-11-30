@@ -40,7 +40,7 @@ const Causes = () => {
                         isLoading && <div className="grid lg:grid-cols-3 gap-5 lg:px-28 px-5">
                             {/* fale array  */}
                             {
-                                Array.from({ length: 3 }).map((_, index) => (
+                                Array.from({ length: 9 }).map((_, index) => (
                                     <Cardloading key={index} />
 
                                 ))

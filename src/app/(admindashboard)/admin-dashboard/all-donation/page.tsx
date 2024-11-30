@@ -35,6 +35,7 @@ import { useDeleteDonation, useGetDonations, useMarkDonationAsCompleted } from '
 import { Skeleton } from '@/components/ui/skeleton'
 import Image from 'next/image'
 import { toast } from '@/hooks/use-toast'
+import Link from 'next/link'
 
 
 
@@ -83,9 +84,7 @@ export default function DonationsList() {
     }
 
 
-    const handleUpdate = (id: string) => {
-        router.push(`/dashboard/donations/edit/${id}`)
-    }
+    
 
     const handleMarkDone = (id: string) => {
         
@@ -233,8 +232,13 @@ export default function DonationsList() {
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end">
                                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                <DropdownMenuItem onClick={() => handleUpdate(donation._id)}>
-                                                    <Pencil className="mr-2 h-4 w-4" /> Update
+                                                <DropdownMenuItem >
+                                                    <Link 
+                                                    href={`/admin-dashboard/all-donation/${donation._id}`}
+                                                    className='flex items-center'
+                                                    > 
+                                                    <Pencil className="mr-2 h-4 w-4" /> <span>Update</span>
+                                                    </Link>
                                                 </DropdownMenuItem>
                                                 <DropdownMenuItem onClick={() => handleDelete(donation._id)}>
                                                     <Trash2 className="mr-2 h-4 w-4" /> Delete
@@ -259,13 +263,25 @@ export default function DonationsList() {
                                 alt={hoveredDonation?.title}
 
                                 className="rounded-md mb-2  
-                                w-full max-h-52 object-cover object-center
+                                 max-h-52 object-cover object-center
                                 "
                                 width={300}
                                 height={300}
                             />
-                            <h3 className="font-semibold text-sm mb-1">{hoveredDonation.title}</h3>
-                            {/* dangeours html make it show leess contetnt crop the test  */}
+                         
+                            <div className="flex justify-between">
+                               {/* make the title short  */}
+
+                                {
+                                    hoveredDonation?.title.length > 20 ? hoveredDonation?.title.slice(0, 20) + '...' : hoveredDonation?.title
+                                }
+
+
+                                <Badge variant={hoveredDonation?.status === 'completed' ? 'secondary' : 'default'}>
+                                    {hoveredDonation?.status}
+                                </Badge>
+                                </div>
+                            
 
                            
                            

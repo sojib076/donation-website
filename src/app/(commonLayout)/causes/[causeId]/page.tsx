@@ -4,7 +4,7 @@ import Form from "../../Component/Causes/Form";
 import { Donation } from "../../CommonDesing/Card";
 import Image from "next/image";
 
-async function fetchCauseData(causeId: string) {
+ export async function fetchCauseData(causeId: string) {
     try {
         const response = await fetch(`https://vivo-donation.vercel.app/api/v1/admin/get-donation/${causeId}`, {
             cache: "force-cache",
@@ -82,7 +82,7 @@ const CauseId = async ({ params }) => {
                     <div className=" max-w-[980px]  mx-auto space-y-4  my-4">
                         <div className="  text-[#292929] text-3xl font-semibold font-['Poppins'] leading-[37px]">Challenge</div>
 
-                     
+
                         <div
                             className="text-justify  text-base font-normal font-['Poppins'] leading-relaxed 
             break-words lg:px-4 md:px-8 py-2 max-w-full"
@@ -92,8 +92,9 @@ const CauseId = async ({ params }) => {
 
                     </div>
                     <div className="lg:w-[70%] lg:max-w-[1000px] 
+                    max-w-[400px] h-[400px]
 
-                    lg:h-[300px] bg-[#d9d9d9] rounded-[10px] mx-auto" >
+                  bg-[#d9d9d9] rounded-[10px] mx-auto" >
                         <Image
                             width={1080}
                             height={1080}

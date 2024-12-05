@@ -35,7 +35,7 @@ const UpdateDonation = ({params}) => {
               }
             );
             const data = await response.json();
-            console.log(data, 'data from fetch');
+            
             setDonationData(data);
           } catch (error) {
             console.error("Error fetching donation data:", error);
@@ -47,7 +47,7 @@ const UpdateDonation = ({params}) => {
 
    
       const mainDonationData = donationData?.data as Donation;
-      console.log(donationData, 'donation data');
+      
       const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
         if (file) {
@@ -61,7 +61,7 @@ const UpdateDonation = ({params}) => {
       }
       const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     
-        console.log('submitting');
+        
         e.preventDefault()
         const formData = new FormData();
         formData.append('title', title);
@@ -73,7 +73,6 @@ const UpdateDonation = ({params}) => {
     
      
         
-    
        
        
     
@@ -84,7 +83,7 @@ const UpdateDonation = ({params}) => {
         return tempDiv.textContent || tempDiv.innerText || "";
       };
     
-      // Update editorState with plain text when mainDonationData?.description changes
+     
       useEffect(() => {
         if (mainDonationData?.description) {
           const plainText = stripHTMLTags(mainDonationData.description);
@@ -93,12 +92,7 @@ const UpdateDonation = ({params}) => {
         }
       }, [mainDonationData?.description]);
     
-      const saveContentAsText = () => {
-        // Extract plain text from the editor state
-        const currentContent = editorState.getCurrentContent();
-        const contentAsText = currentContent.getPlainText();
-        console.log("Saved content as plain text:", contentAsText);
-      };
+     
       
      
       const toggleInlineStyle = (style) => {

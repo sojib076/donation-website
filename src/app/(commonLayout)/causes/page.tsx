@@ -10,8 +10,8 @@ import Cardloading from "../Component/Cardloading";
 
 const Causes = () => {
     const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState(10)
-    const { data, isLoading, isError, refetch } = useGetDonations(page, limit);
+    const [limit, ] = useState(10)
+    const { data, isLoading,  refetch } = useGetDonations(page, limit);
 
 
     const datas = data?.data?.donations

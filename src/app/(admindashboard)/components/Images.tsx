@@ -7,56 +7,35 @@ import { Label } from "@/components/ui/label"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Grid, List, Upload, X } from 'lucide-react'
+import {  Grid, List, Trash2, Upload, X } from 'lucide-react'
 import Image from 'next/image'
+import { usecreateImageUpload, useDeleteImage, useGetImages } from '@/hooks/Images.hook'
+import { FaSpinner } from 'react-icons/fa'
 
-// Mock function to simulate image upload
-const uploadImage = async (file: File, name: string): Promise<{ id: string, name: string, url: string }> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        id: Math.random().toString(36).substr(2, 9),
-        name: name,
-        url: URL.createObjectURL(file)
-      })
-    }, 1000)
-  })
-}
 
-// Mock function to fetch images
-const fetchImages = async (page: number, perPage: number): Promise<{ images: Array<{ id: string, name: string, url: string }>, total: number }> => {
-  const mockImages = Array(50).fill(null).map((_, i) => ({
-    id: `img${i}`,
-    name: `Image ${i + 1}`,
-    url: `/placeholder.svg?height=200&width=200&text=Image${i + 1}`
-  }))
 
-  return {
-    images: mockImages.slice((page - 1) * perPage, page * perPage),
-    total: mockImages.length
-  }
-}
+
+
 
 export default function Component() {
   const [viewType, setViewType] = useState<'grid' | 'table'>('grid')
+  const { mutate: createImage, isSuccess, } = usecreateImageUpload()
+  const { mutate: deleteImage  ,isSuccess:isdelete ,isPending} = useDeleteImage()
   const [currentPage, setCurrentPage] = useState(1)
-  const [images, setImages] = useState<Array<{ id: string, name: string, url: string }>>([])
-  const [totalImages, setTotalImages] = useState(0)
+  const [images, setImages] = useState<Array<{ _id: string, name: string, url: string }>>([])
+
+  const { data, isLoading, refetch } = useGetImages(currentPage, 5)
   const [uploadPreview, setUploadPreview] = useState<string | null>(null)
   const [uploadName, setUploadName] = useState('')
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
-  const perPage = 10
 
-  const loadImages = async () => {
-    const result = await fetchImages(currentPage, perPage)
-    setImages(result.images)
-    setTotalImages(result.total)
-  }
 
-  
+
+
   useEffect(() => {
-    loadImages()
-  }, [currentPage]) // eslint-disable-line react-hooks/exhaustive-deps
+    setImages(data?.data?.
+      images || [])
+  }, [data])
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -69,14 +48,42 @@ export default function Component() {
   const handleUpload = async () => {
     const fileInput = document.querySelector<HTMLInputElement>('input[type="file"]')
     const file = fileInput?.files?.[0]
+    const formData = new FormData()
+
+
     if (file) {
-      const uploadedImage = await uploadImage(file, uploadName)
-      setImages(prev => [uploadedImage, ...prev])
-      setUploadPreview(null)
-      setUploadName('')
-      if (fileInput) fileInput.value = ''
-      setIsUploadModalOpen(false)
+      formData.append('image', file)
+      formData.append('name', uploadName)
+      createImage(formData)
+
+      if (isSuccess) {
+        setIsUploadModalOpen(false)
+        setImages(prev => [...prev, { _id: `img${prev.length + 1}`, name: uploadName, url: uploadPreview }])
+        setUploadPreview(null)
+        setUploadName('')
+
+      }
+
+
     }
+  }
+
+  const handelNext = () => {
+    setCurrentPage(prev => prev + 1)
+    refetch()
+  }
+  const handelPrevious = () => {
+    setCurrentPage(prev => prev - 1)
+    refetch()
+  }
+  const handleDelete = (id: string) => {
+    console.log(id);
+    deleteImage(id)
+    if (isPending) {
+      setImages(prev => prev.filter(image => image._id !== id))
+    }
+
+    refetch()
   }
 
   return (
@@ -101,10 +108,10 @@ export default function Component() {
               </div>
               {uploadPreview && (
                 <div className="relative">
-                  <Image 
-                    height={200}
-                    width={200}
-                  src={uploadPreview} alt="Upload preview" className="w-full h-48 object-cover rounded-md" />
+                  <Image
+                    height={800}
+                    width={800}
+                    src={uploadPreview} alt="Upload preview" className="w-full h-48 object-cover rounded-md" />
                   <Button
                     size="icon"
                     variant="destructive"
@@ -145,33 +152,62 @@ export default function Component() {
         </ToggleGroup>
         <div className="flex items-center gap-2">
           <Button
-            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
+            onClick={
+              handelPrevious
+            }
+            disabled={currentPage === 1 || isLoading || !data?.data?.totalPages}
           >
             Previous
           </Button>
-          <span className="text-sm">
-            Page {currentPage} of {Math.ceil(totalImages / perPage)}
-          </span>
+
           <Button
-            onClick={() => setCurrentPage(prev => Math.min(prev + 1, Math.ceil(totalImages / perPage)))}
-            disabled={currentPage === Math.ceil(totalImages / perPage)}
+
+            onClick={handelNext}
+            disabled={currentPage === data?.data?.totalPages || isLoading || !data?.data?.totalPages}
           >
             Next
           </Button>
         </div>
       </div>
 
+      {
+        isLoading && <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <div
+              key={index}
+              className="animate-pulse bg-gray-300 rounded-lg h-48 w-full"
+            ></div>
+          ))}
+        </div>
+      }
+
       {viewType === 'grid' ? (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {images.map(image => (
-            <div key={image.id} className="group relative overflow-hidden rounded-lg shadow-md transition-all hover:shadow-lg">
-              <Image 
-                height={200}
-                width={200}
-              
-              src={image.url} alt={image.name} className="w-full h-48 object-cover transition-transform group-hover:scale-105" />
-              <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+            <div key={image._id} className="group relative overflow-hidden rounded-lg shadow-md transition-all hover:shadow-lg">
+              <Image
+                height={400}
+                width={400}
+                alt={image.name ? image.name : 'Image'}
+
+                src={image.url}  className="w-full h-48 object-cover transition-transform group-hover:scale-105" />
+              <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-1">
+                  <Button className="w-20" variant='destructive' 
+                  disabled={isPending}
+                onClick={() => handleDelete(image._id)}>
+
+                  {
+                    isdelete && <Trash2 className="w-4 h-4" /> 
+                  }
+                  {
+                    isPending && <FaSpinner className="w-4 h-4 animate-spin" />
+                  }
+                  {
+                    !isPending && !isdelete && <Trash2 className="w-4 h-4" />
+                  }
+                  
+                  
+                </Button>
                 <p className="text-white p-2 text-sm truncate w-full">{image.name}</p>
               </div>
             </div>
@@ -188,12 +224,12 @@ export default function Component() {
             </TableHeader>
             <TableBody>
               {images.map(image => (
-                <TableRow key={image.id}>
+                <TableRow key={image._id}>
                   <TableCell>
-                    <Image 
-                      height={64}
-                      width={64}
-                    src={image.url} alt={image.name} className="w-16 h-16 object-cover rounded-md" />
+                    <Image
+                      height={640}
+                      width={640}
+                      src={image.url}  alt={image.name ? image.name : 'Image'} className="w-16 h-16 object-cover rounded-md" />
                   </TableCell>
                   <TableCell>{image.name}</TableCell>
                 </TableRow>

@@ -2,7 +2,7 @@
 
 import ReduxProvider from "@/lib/provider";
 import "./globals.css";
-import { Poppins } from 'next/font/google';
+import { Poppins ,Cabin} from 'next/font/google';
 import { ToastProvider } from "@/components/ui/toast";
 
 
@@ -12,6 +12,13 @@ const poppins = Poppins({
   weight: ['400', '700'],     
   display: 'swap',            
 });
+
+const cabin = Cabin({
+  subsets: ['latin'],       
+  weight: ['400', '700'],     
+  display: 'swap',            
+});
+
 
 
 
@@ -24,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-      className={` ${poppins.className}`}
+      className={` ${poppins.className} ${cabin.className} `}
       >
       
        <ReduxProvider>

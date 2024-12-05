@@ -106,7 +106,8 @@ export default function DonationsList() {
         refetch()
     }
 
-    console.log(currentPage);
+    const totalPages = data?.data?.totalPages
+    console.log(totalPages);
 
 
     return (
@@ -304,7 +305,7 @@ export default function DonationsList() {
                 </span>
                 <Button
                     onClick={handlenextPage}
-                    disabled={currentPage === data?.data?.totalPages || isPending}
+                    disabled={currentPage === data?.data?.totalPages || isPending || !data?.data?.totalPages}
                     className="ml-2"
                 >
                     Next

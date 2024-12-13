@@ -11,6 +11,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { PenTool, ImageIcon, FolderOpen, Megaphone, Upload } from 'lucide-react'
 import Image from 'next/image'
+import { useGetDonations } from '@/hooks/Donation.hook'
+import { useGetImages } from '@/hooks/Images.hook'
 
 export default function ModernAdminBlogPage() {
   const [title, setTitle] = useState('')
@@ -18,9 +20,15 @@ export default function ModernAdminBlogPage() {
   const [category, setCategory] = useState('')
   const [campaign, setCampaign] = useState('')
   const [newImage, setNewImage] = useState<File | null>(null)
-  const [selectedImage, setSelectedImage] = useState('')
+  const [selectedImage, setSelectedImage] = useState() as any
+  const [currentPage, setCurrentPage] = useState(1)
 
-  // This would typically be fetched from your backend
+  const { data: Donations, isPending, isSuccess, refetch } = useGetDonations(1, 20)
+  const { data, isLoading, } = useGetImages(currentPage, 1)
+
+  const donations = Donations?.data?.donations
+  const imagesData = data?.data?.images
+  console.log(imagesData);
   const previousImages = [
     '/placeholder.svg?height=1100&width=100',
     '/placeholder.svg?height=1001&width=100',
@@ -34,15 +42,27 @@ export default function ModernAdminBlogPage() {
     }
   }
 
-  const handleImageSelection = (imagePath: string) => {
+  const handleImageSelection = (imagePath: any) => {
+
     setSelectedImage(imagePath)
     setNewImage(null)
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const imageToUse = newImage ? 'New Image Uploaded' : selectedImage
+    const imageToUse = newImage ? 'New Image Uploaded' : selectedImage?.url
     console.log({ title, content, category, campaign, image: imageToUse })
+  }
+
+
+
+  const handelNext = () => {
+    setCurrentPage(prev => prev + 1)
+    refetch()
+  }
+  const handelPrevious = () => {
+    setCurrentPage(prev => prev - 1)
+    refetch()
   }
 
   return (
@@ -79,7 +99,7 @@ export default function ModernAdminBlogPage() {
                     <TabsTrigger value="upload">Upload New</TabsTrigger>
                     <TabsTrigger value="select">Select Existing</TabsTrigger>
                   </TabsList>
-                  
+
                   <TabsContent value="upload">
                     <Input
                       id="newImage"
@@ -92,24 +112,59 @@ export default function ModernAdminBlogPage() {
                   <TabsContent value="select">
                     <RadioGroup value={selectedImage} onValueChange={handleImageSelection}>
                       <div className="grid grid-cols-3 gap-4">
-                        {previousImages.map((img, index) => (
+                        {
+                          isLoading && Array.from({ length: 3 }).map((_, index) => (
+                            <div key={index} className="flex items-center space-x-2">
+                              <div className="sr-only" />
+                              <div className="cursor-pointer border-2 rounded-md p-2 border-gray-300 w-[200px] h-[200px]">
+                                <div className="bg-gray-200 animate-pulse w-full h-full rounded-md"></div>
+                              </div>
+                            </div>
+                          ))
+                        }
+
+                        {imagesData?.map((img, index) => (
                           <div key={index} className="flex items-center space-x-2">
                             <RadioGroupItem value={img} id={`image-${index}`} className="sr-only" />
                             <Label
                               htmlFor={`image-${index}`}
-                              className={`cursor-pointer border-2 rounded-md p-2 ${
-                                selectedImage === img ? 'border-blue-500 ring-2 ring-blue-500' : 'border-gray-300'
-                              }`}
+                              className={`cursor-pointer border-2 rounded-md p-2 ${selectedImage === img ? 'border-blue-500 ring-2 ring-blue-500' : 'border-gray-300'
+                                }`}
                             >
-                              <Image  
+                              <Image
                                 width={200}
                                 height={200}
-                              src={img} alt={`Previous upload ${index + 1}`} className="w-full h-auto" />
+                                src={img?.url} alt={`Previous upload ${index + 1}`} className="w-full h-auto" />
                             </Label>
                           </div>
                         ))}
+
+                      </div>
+                      <div className="flex items-center gap-2">
+
+                        {/* now previous  */}
+
+                        <div
+                          className={` bg-blue-900/50  text-black py-2 px-4 rounded-md hover:from-purple-700 hover:to-blue-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg
+                             ${currentPage === 1 || isLoading ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+                          onClick={currentPage === 1 ||isLoading ? null : handelPrevious}
+                        >
+                          Previous
+                        </div>
+
+
+
+                        <div
+                          className={`cursor-pointer bg-blue-900/50 sha text-black py-2 px-4 rounded-md hover:from-purple-700 hover:to-blue-700 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg
+                             ${currentPage === data?.data?.totalPages || !data?.data?.totalPages ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+                          onClick={currentPage === data?.data?.totalPages || !data?.data?.totalPages ? null : handelNext}
+                        >
+                          Next
+                        </div>
+
                       </div>
                     </RadioGroup>
+
                   </TabsContent>
                 </Tabs>
               </div>
@@ -130,7 +185,10 @@ export default function ModernAdminBlogPage() {
                       <SelectItem value="food">Food</SelectItem>
                       <SelectItem value="travel">Travel</SelectItem>
                     </SelectContent>
+
                   </Select>
+                  {/* pagination  */}
+
                 </div>
 
                 <div className="space-y-2">
@@ -138,14 +196,19 @@ export default function ModernAdminBlogPage() {
                     <Megaphone className="w-5 h-5" />
                     Connect to Campaign
                   </Label>
-                  <Select value={campaign} onValueChange={setCampaign}>
+                  <Select
+
+                    value={campaign} onValueChange={setCampaign}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select a campaign" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="campaign1">Campaign 1</SelectItem>
-                      <SelectItem value="campaign2">Campaign 2</SelectItem>
-                      <SelectItem value="campaign3">Campaign 3</SelectItem>
+                      {isPending && <SelectItem value=" s" disabled>Loading...</SelectItem>}
+                      {isSuccess && donations?.map((donation) => (
+                        <SelectItem key={donation?._id} value={donation?._id}>
+                          {donation?.title}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
@@ -167,7 +230,7 @@ export default function ModernAdminBlogPage() {
                 <Upload className="w-5 h-5 mr-2" />
                 Publish Blog Post
               </Button>
-              
+
             </form>
           </CardContent>
         </Card>

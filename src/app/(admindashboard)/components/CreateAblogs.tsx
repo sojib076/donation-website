@@ -13,6 +13,7 @@ import { PenTool, ImageIcon, FolderOpen, Megaphone, Upload } from 'lucide-react'
 import Image from 'next/image'
 import { useGetDonations } from '@/hooks/Donation.hook'
 import { useGetImages } from '@/hooks/Images.hook'
+import { useCreateBlog } from '@/hooks/Blog.hook'
 
 export default function ModernAdminBlogPage() {
   const [title, setTitle] = useState('')
@@ -22,7 +23,7 @@ export default function ModernAdminBlogPage() {
   const [newImage, setNewImage] = useState<File | null>(null)
   const [selectedImage, setSelectedImage] = useState() as any
   const [currentPage, setCurrentPage] = useState(1)
-
+const {mutate:createBlog}=useCreateBlog()
   const { data: Donations, isPending, isSuccess, refetch } = useGetDonations(1, 20)
   const { data, isLoading, } = useGetImages(currentPage, 1)
 
@@ -51,7 +52,14 @@ export default function ModernAdminBlogPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const imageToUse = newImage ? 'New Image Uploaded' : selectedImage?.url
-    console.log({ title, content, category, campaign, image: imageToUse })
+    const blogData = {
+      title,
+      content,
+      category,
+      campaign,
+      image: imageToUse
+    }
+    createBlog(blogData)
   }
 
 
